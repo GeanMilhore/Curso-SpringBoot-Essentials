@@ -34,9 +34,14 @@ public class AnimeController {
         return ResponseEntity.ok(animeService.findById(id));
     }
 
-    // jackson vai fazer o mapeamento para classe anime, JSON com atributos iguais ao da classe ele faz o mapeamento
     @PostMapping
     public ResponseEntity<Anime> save(@RequestBody Anime anime){
         return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        animeService.delete(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

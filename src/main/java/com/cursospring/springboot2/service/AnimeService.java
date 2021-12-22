@@ -22,10 +22,15 @@ public class AnimeService{
         return animeRepository.findAll();
     }
 
+    public List<Anime> findByName(String name){
+        return animeRepository.findByName(name);
+    }
+
     public Anime findByIdOrThrowBadRequestException(long id){
         return animeRepository.findById(id)
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not Found!"));
     }
+
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
         return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));

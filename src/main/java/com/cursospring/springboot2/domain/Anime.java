@@ -2,10 +2,20 @@ package com.cursospring.springboot2.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data // método get, set, equals, toString, hashcode -- vai gerar tudo isto na classe
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class Anime {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 }

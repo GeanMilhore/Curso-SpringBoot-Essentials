@@ -1,6 +1,7 @@
 package com.cursospring.springboot2.service;
 
 import com.cursospring.springboot2.domain.Anime;
+import com.cursospring.springboot2.mapper.AnimeMapper;
 import com.cursospring.springboot2.repository.AnimeRepository;
 import com.cursospring.springboot2.requests.AnimePostRequestBody;
 import com.cursospring.springboot2.requests.AnimePutRequestBody;
@@ -27,7 +28,7 @@ public class AnimeService{
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
-        return animeRepository.save(Anime.builder().name(animePostRequestBody.getName()).build());
+        return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
     }
 
     public void delete(Long id) {
@@ -36,10 +37,8 @@ public class AnimeService{
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
         Anime savedAnime = findByIdOrThrowBadRequestException(animePutRequestBody.getId());
-        Anime anime = Anime.builder()
-                .id(savedAnime.getId())
-                .name(animePutRequestBody.getName())
-                .build();
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
+        anime.setId(savedAnime.getId());
         animeRepository.save(anime);
     }
 }

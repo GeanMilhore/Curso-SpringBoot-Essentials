@@ -8,6 +8,7 @@ import com.cursospring.springboot2.requests.AnimePostRequestBody;
 import com.cursospring.springboot2.requests.AnimePutRequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,7 +31,9 @@ public class AnimeService{
                         .orElseThrow(() -> new BadRequestException("Anime not Found!"));
     }
 
-
+    // não da rollback para exeções do tipo checked
+    // apenas com @Transactional(roolbackFor = Exception.class);
+    @Transactional // caso haja uma exeção ele faz o rollback
     public Anime save(AnimePostRequestBody animePostRequestBody) {
         return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
     }

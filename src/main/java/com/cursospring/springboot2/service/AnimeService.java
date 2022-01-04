@@ -31,9 +31,7 @@ public class AnimeService{
                         .orElseThrow(() -> new BadRequestException("Anime not Found!"));
     }
 
-    // não da rollback para exeções do tipo checked
-    // apenas com @Transactional(roolbackFor = Exception.class);
-    @Transactional // caso haja uma exeção ele faz o rollback
+    @Transactional
     public Anime save(AnimePostRequestBody animePostRequestBody) {
         return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
     }

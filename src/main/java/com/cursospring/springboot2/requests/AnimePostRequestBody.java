@@ -9,9 +9,4 @@ import javax.validation.constraints.NotEmpty;
 public class AnimePostRequestBody {
     @NotEmpty(message = "The anime name cannot be empty")
     private String name;
-
-    // remover campo abaixo na próxima branch
-    @URL(message = "the URL is not valid")
-    private String url;
-
 }

@@ -31,6 +31,8 @@ public class SpringClient {
         );
         log.info(exchange.getBody());
 
+        // POST
+
 //        Anime loveIsWar = Anime.builder().name("loveiswar").build();
 //        Anime loveIsWarSaved = new RestTemplate().postForObject("http://localhost:8080/animes/", loveIsWar, Anime.class);
 //        log.info("anime saved {}", loveIsWarSaved);
@@ -43,6 +45,29 @@ public class SpringClient {
                 Anime.class
         );
         log.info("anime saved {}", bakuganSaved);
+
+
+        // PUT
+        Anime animeToBeUpdated = bakuganSaved.getBody();
+        animeToBeUpdated.setName("Bakugan Updatado");
+
+        ResponseEntity<Void> bakuganUpdated = new RestTemplate().exchange(
+                "http://localhost:8080/animes/",
+                HttpMethod.PUT,
+                new HttpEntity<>(animeToBeUpdated, createJsonHeader()),
+                Void.class);
+
+        log.info(bakuganUpdated);
+
+        // DELETE
+        ResponseEntity<Void> bakuganDeleted = new RestTemplate().exchange(
+                "http://localhost:8080/animes/{id}",
+                HttpMethod.DELETE,
+                null,
+                Void.class,
+                animeToBeUpdated.getId());
+        log.info(bakuganDeleted);
+
     }
 
     // exchange permite criar header http dentro do httpEntity

@@ -3,8 +3,7 @@ package com.cursospring.springboot2.client;
 import com.cursospring.springboot2.domain.Anime;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -28,9 +27,28 @@ public class SpringClient {
                 "http://localhost:8080/animes/all",
                 HttpMethod.GET,
                 /* reques object  */ null,
-                new ParameterizedTypeReference<>() {}
+                new ParameterizedTypeReference<List<Anime>>() {}
         );
         log.info(exchange.getBody());
 
+//        Anime loveIsWar = Anime.builder().name("loveiswar").build();
+//        Anime loveIsWarSaved = new RestTemplate().postForObject("http://localhost:8080/animes/", loveIsWar, Anime.class);
+//        log.info("anime saved {}", loveIsWarSaved);
+
+        Anime bakugan = Anime.builder().name("bakugan").build();
+        ResponseEntity<Anime> bakuganSaved = new RestTemplate().exchange(
+                "http://localhost:8080/animes/",
+                HttpMethod.POST,
+                new HttpEntity<>(bakugan, createJsonHeader()),
+                Anime.class
+        );
+        log.info("anime saved {}", bakuganSaved);
+    }
+
+    // exchange permite criar header http dentro do httpEntity
+    private static HttpHeaders createJsonHeader(){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        return httpHeaders;
     }
 }

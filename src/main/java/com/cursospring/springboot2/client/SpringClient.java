@@ -18,24 +18,16 @@ public class SpringClient {
         Anime object = new RestTemplate().getForObject("http://localhost:8080/animes/7", Anime.class);
         log.info(object);
 
-        // modo array
         Anime[] animes = new RestTemplate().getForObject("http://localhost:8080/animes/all", Anime[].class);
         log.info(Arrays.toString(animes));
 
-        // supertype token, método exchange
         ResponseEntity<List<Anime>> exchange = new RestTemplate().exchange(
                 "http://localhost:8080/animes/all",
                 HttpMethod.GET,
-                /* reques object  */ null,
+                null,
                 new ParameterizedTypeReference<List<Anime>>() {}
         );
         log.info(exchange.getBody());
-
-        // POST
-
-//        Anime loveIsWar = Anime.builder().name("loveiswar").build();
-//        Anime loveIsWarSaved = new RestTemplate().postForObject("http://localhost:8080/animes/", loveIsWar, Anime.class);
-//        log.info("anime saved {}", loveIsWarSaved);
 
         Anime bakugan = Anime.builder().name("bakugan").build();
         ResponseEntity<Anime> bakuganSaved = new RestTemplate().exchange(
@@ -46,8 +38,6 @@ public class SpringClient {
         );
         log.info("anime saved {}", bakuganSaved);
 
-
-        // PUT
         Anime animeToBeUpdated = bakuganSaved.getBody();
         animeToBeUpdated.setName("Bakugan Updatado");
 
@@ -59,7 +49,6 @@ public class SpringClient {
 
         log.info(bakuganUpdated);
 
-        // DELETE
         ResponseEntity<Void> bakuganDeleted = new RestTemplate().exchange(
                 "http://localhost:8080/animes/{id}",
                 HttpMethod.DELETE,
@@ -70,7 +59,6 @@ public class SpringClient {
 
     }
 
-    // exchange permite criar header http dentro do httpEntity
     private static HttpHeaders createJsonHeader(){
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);

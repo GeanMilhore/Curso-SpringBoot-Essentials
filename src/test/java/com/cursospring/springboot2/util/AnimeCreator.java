@@ -7,6 +7,7 @@ public class AnimeCreator {
     public static  Anime createAnimeToBeSaved(){
         return Anime
                 .builder()
+                .name("Hajime no Ippo")
                 .build();
     }
 

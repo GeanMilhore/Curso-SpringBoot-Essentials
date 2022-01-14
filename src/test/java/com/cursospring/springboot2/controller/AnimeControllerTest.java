@@ -26,20 +26,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-// @SpringBootTest vai tentar iniciar a aplicação spring antes de realizar os testes, causa dependencia (ex:docker)
-
 @ExtendWith(SpringExtension.class)
 class AnimeControllerTest {
 
-    @InjectMocks // utilizado para classe que estamos testando
+    @InjectMocks
     private AnimeController animeController;
 
-    @Mock // todas as classes injetadas dentro da classe que são utilizadas dentro da principal de teste
+    @Mock
     private AnimeService animeServiceMock;
 
     @BeforeEach
     void setUp(){
-        //                                         JDK Error / change
         PageImpl<Anime> animePage = new PageImpl<>(Arrays.asList(AnimeCreator.createValidAnime()));
 
         BDDMockito.when(animeServiceMock.listAll(ArgumentMatchers.any()))

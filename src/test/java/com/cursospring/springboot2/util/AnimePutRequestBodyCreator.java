@@ -4,7 +4,7 @@ import com.cursospring.springboot2.requests.AnimePutRequestBody;
 
 public class AnimePutRequestBodyCreator {
 
-    public static AnimePutRequestBody createAnimePostRequestBody(){
+    public static AnimePutRequestBody createAnimePutRequestBody(){
         return AnimePutRequestBody
                 .builder()
                 .id(AnimeCreator.createValidUpdatedAnime().getId())

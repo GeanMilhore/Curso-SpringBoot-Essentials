@@ -149,10 +149,10 @@ class AnimeControllerTest {
     void replace_UpdatesAnime_WhenSuccessful(){
 
         Assertions.assertThatCode(() -> animeController
-                        .replace(AnimePutRequestBodyCreator.createAnimePostRequestBody()))
+                        .replace(AnimePutRequestBodyCreator.createAnimePutRequestBody()))
                         .doesNotThrowAnyException();
 
-        ResponseEntity<Void> entity = animeController.replace(AnimePutRequestBodyCreator.createAnimePostRequestBody());
+        ResponseEntity<Void> entity = animeController.replace(AnimePutRequestBodyCreator.createAnimePutRequestBody());
 
         Assertions.assertThat(entity).isNotNull();
         Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);

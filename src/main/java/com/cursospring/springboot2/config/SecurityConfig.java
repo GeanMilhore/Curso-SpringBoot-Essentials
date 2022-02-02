@@ -14,6 +14,30 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /**
+     *
+     *      Cadeia de Filtros do Spring Security
+     *
+     *  BasicAuthenticationFilter
+     *  -- verifica se possui authenticação do tipo base64
+     *
+     *  UsernamePasswordAuthenticationFilter
+     *  -- verifica se na requisição tem usuário e password validos
+     *
+     *  DefaultLoginPageGeneratingFilter
+     *  -- página padrão de login
+     *
+     *  DefaultLogoutPageGeneratingFilter
+     * -- página padrão de logout
+     *
+     *  FilterSecurityInterceptor
+     *  -- processo que checka se o usuário está atualizado
+     *
+     *  PRIORIDADES
+     *
+     *  Authentication - Authorization
+     */
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -22,6 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .anyRequest()
                 .authenticated()
+                .and()
+                .formLogin()
                 .and()
                 .httpBasic();
     }

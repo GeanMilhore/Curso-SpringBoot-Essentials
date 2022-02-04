@@ -99,11 +99,6 @@ class AnimeRepositoryTest {
     void save_ThrowConstraintViolationException_WhenNameIsEmpty(){
         Anime animeToBeSaved = AnimeCreator.createAnimeWithName("");
 
-        //  2 ways to do
-
-//        Assertions.assertThatThrownBy(() -> this.animeRepository.save(animeToBeSaved))
-//                .isInstanceOf(ConstraintViolationException.class);
-
         Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> this.animeRepository.save(animeToBeSaved))
                 .withMessageContaining("The anime name cannot be empty");

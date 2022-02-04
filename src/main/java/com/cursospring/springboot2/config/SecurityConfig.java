@@ -25,6 +25,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
+                // antMatchers protege URLs
+                .antMatchers("/animes/admin/**").hasRole("ADMIN")
+                // a ordem importa | a role que seja mais restritiva vem primeiro
+                .antMatchers("/animes/**").hasRole("USER")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -36,9 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+
         log.info("Password encoded {}", passwordEncoder.encode("senha"));
-        // config spring suporta multiplas autenticações ( Providers )
-        // podemos trazer usuários de outros banco de dados ( exemplo atual: memory )
+
         auth.inMemoryAuthentication()
                 .withUser("admin2")
                 .password(passwordEncoder.encode("senha"))
@@ -48,12 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .password(passwordEncoder.encode("senha"))
                 .roles("USER");
 
-        // precisamos criar algo que nosso sistema vai reconhecer
-        // por padrão o userDetailsService é apenas uma interface / precisamos prover a implementação do valor
-        // quando estamos trazendo o loadByUsername ele vai precisar comparar o password { codificado }
-
-        auth.userDetailsService(springUserDetailsService) // este método é executado no momento em que fazemos login
-                .passwordEncoder(passwordEncoder); // graças ao polimorfismo utiliza nosso loadByUsename da nossa classe
-                                                    // User details Customizada
+        auth.userDetailsService(springUserDetailsService).passwordEncoder(passwordEncoder);
     }
 }

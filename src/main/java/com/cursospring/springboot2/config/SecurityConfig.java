@@ -25,10 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                // antMatchers protege URLs
                 .antMatchers("/animes/admin/**").hasRole("ADMIN")
-                // a ordem importa | a role que seja mais restritiva vem primeiro
                 .antMatchers("/animes/**").hasRole("USER")
+                .antMatchers("/actuator/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

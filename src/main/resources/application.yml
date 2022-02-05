@@ -15,3 +15,13 @@ logging:
     org:
       hibernate:
         SQL: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics
+#        include: "*"
+info:
+  app: Spring boot to essentials
+  tipo: curso
